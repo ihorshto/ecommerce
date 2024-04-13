@@ -20,7 +20,7 @@ class RegisterType extends AbstractType
             ->add('email', EmailType::class)
             // ->add('roles')
             ->add('password', PasswordType::class)
-            ->add('password_confirm', PasswordType::class);
+            ->add('password_confirm', PasswordType::class, ['label' => false, 'mapped' => false]);
         ;
     }
 
