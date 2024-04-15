@@ -36,7 +36,14 @@ class RegisterController extends AbstractController
                 ));
             $manager->persist($user); // previent doctrine que l'on veut sauver on persiste dans le temps
             $manager->flush(); // envoi la requête à la base de donnée
+            $this->addFlash(
+                'success',
+                "Le compte {$user->getEmail()} a bien été créé"
+                );
+                // on retourne vers l'accueil
+                return $this->redirectToRoute('home');
         }
+        
 
         return $this->render('register/index.html.twig',[
             "form"=>$form->createView() ,
