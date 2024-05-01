@@ -14,31 +14,30 @@ use Symfony\Component\Routing\Annotation\Route;
 class RegisterController extends AbstractController
 {
     private $passwordHasher;
-    private $manager; // Add this property
-
+    private $manager;
     public function __construct(UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $manager)
     {
         $this->passwordHasher = $passwordHasher;
         $this->manager = $manager;
     }
 
-    #[Route('/register', name: 'register')]
+    #[Route('/inscription', name: 'register')]
     public function index(Request $request): Response
     {
         $user = new User;
-
         $form = $this->createForm(RegisterType::class, $user);
 
         $form->handleRequest($request);
-
+        // dump($user); // équivalent de var_dump on peut utiliser dd() => équivalent de dump and die
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setPassword($this->passwordHasher->hashPassword(
                 $user,
                 $user->getPassword()
             ));
-            // dd($user);
-
+            // $user->setEmail('ihor@gmail.com');
             $this->manager->persist($user); // Use $this->manager instead of $manager
+            // dd($user->getEmail());
+            
             $this->manager->flush();
             
             $this->addFlash(
@@ -46,7 +45,7 @@ class RegisterController extends AbstractController
                 "Le compte {$user->getEmail()} a bien été créé"
             );
 
-            return $this->redirectToRoute('app_account');
+            return $this->redirectToRoute('compte');
         }
         
         return $this->render('register/index.html.twig',[

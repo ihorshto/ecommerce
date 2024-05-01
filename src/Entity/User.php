@@ -6,9 +6,12 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
+#[UniqueEntity(fields: "email", message: "cet email est déjà utilisé")]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -17,6 +20,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180)]
+    #[Assert\Email(message: "L'email {{ value }} n'est pas un email valide !")]
     private ?string $email = null;
 
     /**
@@ -26,15 +30,37 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private array $roles = [];
 
     /**
-     * @var string The hashed password
+    * @var string The hashed password
      */
-    #[ORM\Column]
+    #[ORM\Column(length: 180)]
+    #[Assert\Length(min: 3, minMessage: "Votre mot de passe doit faire un minimun de 8 caractères")]
+    // #[Assert\Regex(
+    //     pattern: "#(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}#", 
+    //     match: true, 
+    //     message: "le mot de passe doit contenir au moins 1 chiffre, 1 lettre minuscule, 1 lettre majuscule et doit faire au moins 8 caractères")]
     private ?string $password = null;
 
+    #[Assert\EqualTo(propertyPath: "password", message: "Les deux mots de passe ne sont pas identiques")]
+    public $password_confirm;
+
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Vous devez renseigner votre prénom")]
+    #[Assert\Length(
+        min: 3, 
+        max: 20,
+        minMessage: "Le prénom doit faire plus que {{ limit }} caractères",
+        maxMessage: "Le prénom ne peut pas faire plus que {{ limit }} caractères"
+    )]
     private ?string $firstName = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Vous devez renseigner votre prénom")]
+    #[Assert\Length(
+        min: 3, 
+        max: 20,
+        minMessage: "Le nom doit faire plus que {{ limit }} caractères",
+        maxMessage: "Le nom ne peut pas faire plus que {{ limit }} caractères"
+    )]
     private ?string $lastName = null;
 
     public function getId(): ?int

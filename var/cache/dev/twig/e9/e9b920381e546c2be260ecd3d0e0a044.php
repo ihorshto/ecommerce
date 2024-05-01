@@ -75,7 +75,7 @@ class __TwigTemplate_6757f50ab444931922548a24d9bf9ec0 extends Template
 
 \t";
         // line 9
-        echo $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->searchAndRenderBlock(twig_get_attribute($this->env, $this->source, (isset($context["form"]) || array_key_exists("form", $context) ? $context["form"] : (function () { throw new RuntimeError('Variable "form" does not exist.', 9, $this->source); })()), "firstName", [], "any", false, false, false, 9), 'row');
+        echo $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->searchAndRenderBlock(twig_get_attribute($this->env, $this->source, (isset($context["form"]) || array_key_exists("form", $context) ? $context["form"] : (function () { throw new RuntimeError('Variable "form" does not exist.', 9, $this->source); })()), "firstName", [], "any", false, false, false, 9), 'row', ["attr" => ["title" => "Titre avec un minimun de 3 caractères et au maximum 20 caractères"]]);
         echo "
 \t";
         // line 10
@@ -141,7 +141,7 @@ class __TwigTemplate_6757f50ab444931922548a24d9bf9ec0 extends Template
 
 \t{{ form_start(form) }}
 
-\t{{ form_row(form.firstName)}}
+\t{{ form_row(form.firstName,{'attr':{'title':'Titre avec un minimun de 3 caractères et au maximum 20 caractères'}}) }}
 \t{{ form_row(form.lastName)}}
 \t{{ form_row(form.email,{'label':false,'attr':{'placeholder':\"Votre email\"}})}}
 \t{{ form_row(form.password,{'label':false,'attr':{'placeholder':\"Votre mot de passe\"}})}}
