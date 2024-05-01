@@ -42,7 +42,10 @@ class FileType extends AbstractType
         $this->translator = $translator;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    /**
+     * @return void
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         // Ensure that submitted data is always an uploaded file or an array of some
         $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($options) {
@@ -84,7 +87,10 @@ class FileType extends AbstractType
         });
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options): void
+    /**
+     * @return void
+     */
+    public function buildView(FormView $view, FormInterface $form, array $options)
     {
         if ($options['multiple']) {
             $view->vars['full_name'] .= '[]';
@@ -97,12 +103,18 @@ class FileType extends AbstractType
         ]);
     }
 
-    public function finishView(FormView $view, FormInterface $form, array $options): void
+    /**
+     * @return void
+     */
+    public function finishView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['multipart'] = true;
     }
 
-    public function configureOptions(OptionsResolver $resolver): void
+    /**
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver)
     {
         $dataClass = null;
         if (class_exists(File::class)) {

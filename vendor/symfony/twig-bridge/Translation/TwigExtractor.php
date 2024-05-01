@@ -45,7 +45,10 @@ class TwigExtractor extends AbstractFileExtractor implements ExtractorInterface
         $this->twig = $twig;
     }
 
-    public function extract($resource, MessageCatalogue $catalogue): void
+    /**
+     * @return void
+     */
+    public function extract($resource, MessageCatalogue $catalogue)
     {
         foreach ($this->extractFiles($resource) as $file) {
             try {
@@ -56,12 +59,18 @@ class TwigExtractor extends AbstractFileExtractor implements ExtractorInterface
         }
     }
 
-    public function setPrefix(string $prefix): void
+    /**
+     * @return void
+     */
+    public function setPrefix(string $prefix)
     {
         $this->prefix = $prefix;
     }
 
-    protected function extractTemplate(string $template, MessageCatalogue $catalogue): void
+    /**
+     * @return void
+     */
+    protected function extractTemplate(string $template, MessageCatalogue $catalogue)
     {
         $visitor = $this->twig->getExtension(TranslationExtension::class)->getTranslationNodeVisitor();
         $visitor->enable();

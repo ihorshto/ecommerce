@@ -32,7 +32,10 @@ class SerializedParsedExpression extends ParsedExpression
         $this->nodes = $nodes;
     }
 
-    public function getNodes(): Node
+    /**
+     * @return Node
+     */
+    public function getNodes()
     {
         return unserialize($this->nodes);
     }

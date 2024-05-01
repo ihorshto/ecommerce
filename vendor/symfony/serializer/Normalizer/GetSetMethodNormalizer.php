@@ -34,24 +34,42 @@ use Symfony\Component\Serializer\Attribute\Ignore;
  *
  * @author Nils Adermann <naderman@naderman.de>
  * @author Kévin Dunglas <dunglas@gmail.com>
+ *
+ * @final since Symfony 6.3
  */
-final class GetSetMethodNormalizer extends AbstractObjectNormalizer
+class GetSetMethodNormalizer extends AbstractObjectNormalizer
 {
     private static array $setterAccessibleCache = [];
 
     public function getSupportedTypes(?string $format): array
     {
-        return ['object' => true];
+        return ['object' => __CLASS__ === static::class || $this->hasCacheableSupportsMethod()];
     }
 
-    public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
+    /**
+     * @param array $context
+     */
+    public function supportsNormalization(mixed $data, ?string $format = null /* , array $context = [] */): bool
     {
         return parent::supportsNormalization($data, $format) && $this->supports($data::class);
     }
 
-    public function supportsDenormalization(mixed $data, string $type, ?string $format = null, array $context = []): bool
+    /**
+     * @param array $context
+     */
+    public function supportsDenormalization(mixed $data, string $type, ?string $format = null /* , array $context = [] */): bool
     {
         return parent::supportsDenormalization($data, $type, $format) && $this->supports($type);
+    }
+
+    /**
+     * @deprecated since Symfony 6.3, use "getSupportedTypes()" instead
+     */
+    public function hasCacheableSupportsMethod(): bool
+    {
+        trigger_deprecation('symfony/serializer', '6.3', 'The "%s()" method is deprecated, implement "%s::getSupportedTypes()" instead.', __METHOD__, get_debug_type($this));
+
+        return __CLASS__ === static::class;
     }
 
     /**
@@ -130,7 +148,10 @@ final class GetSetMethodNormalizer extends AbstractObjectNormalizer
         return null;
     }
 
-    protected function setAttributeValue(object $object, string $attribute, mixed $value, ?string $format = null, array $context = []): void
+    /**
+     * @return void
+     */
+    protected function setAttributeValue(object $object, string $attribute, mixed $value, ?string $format = null, array $context = [])
     {
         $setter = 'set'.ucfirst($attribute);
         $key = $object::class.':'.$setter;

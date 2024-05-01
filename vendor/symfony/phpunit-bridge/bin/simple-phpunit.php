@@ -99,8 +99,10 @@ $passthruOrFail = function ($command) {
 
 if (\PHP_VERSION_ID >= 80000) {
     $PHPUNIT_VERSION = $getEnvVar('SYMFONY_PHPUNIT_VERSION', '9.6') ?: '9.6';
-} else {
+} elseif (\PHP_VERSION_ID >= 70200) {
     $PHPUNIT_VERSION = $getEnvVar('SYMFONY_PHPUNIT_VERSION', '8.5') ?: '8.5';
+} else {
+    $PHPUNIT_VERSION = $getEnvVar('SYMFONY_PHPUNIT_VERSION', '7.5') ?: '7.5';
 }
 
 $MAX_PHPUNIT_VERSION = $getEnvVar('SYMFONY_MAX_PHPUNIT_VERSION', false);

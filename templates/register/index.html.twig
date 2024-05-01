@@ -5,8 +5,12 @@
 	Mon formulaire d'inscription
 
 	{{ form_start(form) }}
+
+	{{ form_row(form.firstName,{'attr':{'title':'Titre avec un minimun de 3 caractères et au maximum 20 caractères'}}) }}
+	{{ form_row(form.lastName)}}
 	{{ form_row(form.email,{'label':false,'attr':{'placeholder':"Votre email"}})}}
 	{{ form_row(form.password,{'label':false,'attr':{'placeholder':"Votre mot de passe"}})}}
-	{{ form_end(form) }}
+	{{ form_row(form.password_confirm,{'label':false,'attr':{'placeholder':"Confirmation du mot de passe"}})}}
 
+	{{ form_end(form) }}
 {% endblock %}

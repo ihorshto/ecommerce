@@ -31,7 +31,10 @@ class SendFailedMessageToNotifierListener implements EventSubscriberInterface
         $this->notifier = $notifier;
     }
 
-    public function onMessageFailed(WorkerMessageFailedEvent $event): void
+    /**
+     * @return void
+     */
+    public function onMessageFailed(WorkerMessageFailedEvent $event)
     {
         if ($event->willRetry()) {
             return;

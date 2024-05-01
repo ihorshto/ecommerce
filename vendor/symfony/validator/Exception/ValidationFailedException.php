@@ -28,7 +28,10 @@ class ValidationFailedException extends RuntimeException
         parent::__construct($violations);
     }
 
-    public function getValue(): mixed
+    /**
+     * @return mixed
+     */
+    public function getValue()
     {
         return $this->value;
     }

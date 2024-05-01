@@ -1,11 +1,6 @@
 CHANGELOG
 =========
 
-7.0
----
-
- * The `in` and `not in` operators now use strict comparison
-
 6.3
 ---
 

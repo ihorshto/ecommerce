@@ -32,7 +32,10 @@ class FixUrlProtocolListener implements EventSubscriberInterface
         $this->defaultProtocol = $defaultProtocol;
     }
 
-    public function onSubmit(FormEvent $event): void
+    /**
+     * @return void
+     */
+    public function onSubmit(FormEvent $event)
     {
         $data = $event->getData();
 

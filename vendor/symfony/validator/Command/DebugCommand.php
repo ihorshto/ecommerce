@@ -47,7 +47,10 @@ class DebugCommand extends Command
         $this->validator = $validator;
     }
 
-    protected function configure(): void
+    /**
+     * @return void
+     */
+    protected function configure()
     {
         $this
             ->addArgument('class', InputArgument::REQUIRED, 'A fully qualified class name or a path')

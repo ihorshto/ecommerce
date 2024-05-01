@@ -29,7 +29,10 @@ class ParsedExpression extends Expression
         $this->nodes = $nodes;
     }
 
-    public function getNodes(): Node
+    /**
+     * @return Node
+     */
+    public function getNodes()
     {
         return $this->nodes;
     }

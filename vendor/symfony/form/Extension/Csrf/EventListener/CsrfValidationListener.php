@@ -51,7 +51,10 @@ class CsrfValidationListener implements EventSubscriberInterface
         $this->serverParams = $serverParams ?? new ServerParams();
     }
 
-    public function preSubmit(FormEvent $event): void
+    /**
+     * @return void
+     */
+    public function preSubmit(FormEvent $event)
     {
         $form = $event->getForm();
         $postRequestSizeExceeded = 'POST' === $form->getConfig()->getMethod() && $this->serverParams->hasPostMaxSizeBeenExceeded();

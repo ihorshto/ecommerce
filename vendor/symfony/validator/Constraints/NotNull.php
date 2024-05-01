@@ -14,6 +14,9 @@ namespace Symfony\Component\Validator\Constraints;
 use Symfony\Component\Validator\Constraint;
 
 /**
+ * @Annotation
+ * @Target({"PROPERTY", "METHOD", "ANNOTATION"})
+ *
  * @author Bernhard Schussek <bschussek@gmail.com>
  */
 #[\Attribute(\Attribute::TARGET_PROPERTY | \Attribute::TARGET_METHOD | \Attribute::IS_REPEATABLE)]
@@ -25,7 +28,12 @@ class NotNull extends Constraint
         self::IS_NULL_ERROR => 'IS_NULL_ERROR',
     ];
 
-    public string $message = 'This value should not be null.';
+    /**
+     * @deprecated since Symfony 6.1, use const ERROR_NAMES instead
+     */
+    protected static $errorNames = self::ERROR_NAMES;
+
+    public $message = 'This value should not be null.';
 
     public function __construct(?array $options = null, ?string $message = null, ?array $groups = null, mixed $payload = null)
     {

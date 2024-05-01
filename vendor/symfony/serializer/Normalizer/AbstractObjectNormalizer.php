@@ -106,11 +106,14 @@ abstract class AbstractObjectNormalizer extends AbstractNormalizer
      */
     public const PRESERVE_EMPTY_OBJECTS = 'preserve_empty_objects';
 
-    protected ?ClassDiscriminatorResolverInterface $classDiscriminatorResolver;
-
     private array $typesCache = [];
     private array $attributesCache = [];
     private readonly \Closure $objectClassResolver;
+
+    /**
+     * @var ClassDiscriminatorResolverInterface|null
+     */
+    protected $classDiscriminatorResolver;
 
     public function __construct(
         ?ClassMetadataFactoryInterface $classMetadataFactory = null,
@@ -135,12 +138,20 @@ abstract class AbstractObjectNormalizer extends AbstractNormalizer
         $this->objectClassResolver = ($objectClassResolver ?? 'get_class')(...);
     }
 
-    public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
+    /**
+     * @param array $context
+     *
+     * @return bool
+     */
+    public function supportsNormalization(mixed $data, ?string $format = null /* , array $context = [] */)
     {
         return \is_object($data) && !$data instanceof \Traversable;
     }
 
-    public function normalize(mixed $object, ?string $format = null, array $context = []): array|string|int|float|bool|\ArrayObject|null
+    /**
+     * @return array|string|int|float|bool|\ArrayObject|null
+     */
+    public function normalize(mixed $object, ?string $format = null, array $context = [])
     {
         if (!isset($context['cache_key'])) {
             $context['cache_key'] = $this->getCacheKey($format, $context);
@@ -218,7 +229,10 @@ abstract class AbstractObjectNormalizer extends AbstractNormalizer
         return $data;
     }
 
-    protected function instantiateObject(array &$data, string $class, array &$context, \ReflectionClass $reflectionClass, array|bool $allowedAttributes, ?string $format = null): object
+    /**
+     * @return object
+     */
+    protected function instantiateObject(array &$data, string $class, array &$context, \ReflectionClass $reflectionClass, array|bool $allowedAttributes, ?string $format = null)
     {
         if ($class !== $mappedClass = $this->getMappedClass($data, $class, $context)) {
             return $this->instantiateObject($data, $mappedClass, $context, new \ReflectionClass($mappedClass), $allowedAttributes, $format);
@@ -269,19 +283,29 @@ abstract class AbstractObjectNormalizer extends AbstractNormalizer
      *
      * @return string[]
      */
-    abstract protected function extractAttributes(object $object, ?string $format = null, array $context = []): array;
+    abstract protected function extractAttributes(object $object, ?string $format = null, array $context = []);
 
     /**
      * Gets the attribute value.
+     *
+     * @return mixed
      */
-    abstract protected function getAttributeValue(object $object, string $attribute, ?string $format = null, array $context = []): mixed;
+    abstract protected function getAttributeValue(object $object, string $attribute, ?string $format = null, array $context = []);
 
-    public function supportsDenormalization(mixed $data, string $type, ?string $format = null, array $context = []): bool
+    /**
+     * @param array $context
+     *
+     * @return bool
+     */
+    public function supportsDenormalization(mixed $data, string $type, ?string $format = null /* , array $context = [] */)
     {
         return class_exists($type) || (interface_exists($type, false) && null !== $this->classDiscriminatorResolver?->getMappingForClass($type));
     }
 
-    public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
+    /**
+     * @return mixed
+     */
+    public function denormalize(mixed $data, string $type, ?string $format = null, array $context = [])
     {
         if (!isset($context['cache_key'])) {
             $context['cache_key'] = $this->getCacheKey($format, $context);
@@ -394,7 +418,10 @@ abstract class AbstractObjectNormalizer extends AbstractNormalizer
         return $object;
     }
 
-    abstract protected function setAttributeValue(object $object, string $attribute, mixed $value, ?string $format = null, array $context = []): void;
+    /**
+     * @return void
+     */
+    abstract protected function setAttributeValue(object $object, string $attribute, mixed $value, ?string $format = null, array $context = []);
 
     /**
      * Validates the submitted data and denormalizes it.

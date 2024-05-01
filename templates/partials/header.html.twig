@@ -6,22 +6,39 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse" id="navbarCollapse">
-				<ul class="navbar-nav me-auto mb-2 mb-md-0">
-					<li class="nav-item">
-						<a class="nav-link active" aria-current="page" href="#">Home</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="#">Link</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link disabled">Disabled</a>
-					</li>
+				<ul class="navbar-nav ml-auto">
+					{% if (app.user) %}
+						<li class="nav-item active">
+							<a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
+						</li>
+						<li class="nav-item active">
+							<a class="nav-link" href="{{ path('account') }}">Mon compte
+								<small>({{app.user.firstName}})</small>
+							</a>
+						</li>
+					{% else %}
+						<li class="nav-item active">
+							<a class="nav-link" href="{{ path('register') }}">Inscription</a>
+						</li>
+						<li class="nav-item active">
+							<a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
+						</li>
+					{% endif %}
 				</ul>
-				<form class="d-flex">
-					<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-					<button class="btn btn-outline-success" type="submit">Search</button>
-				</form>
 			</div>
 		</div>
 	</nav>
+	{# {{ dump(app.flashes) }} #}
+	{#
+												 {{ dump(app) }}
+												 {{ dump(app.flashes) }}
+												 #}
+	{% for label, messages in app.flashes %}
+		<div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+			{% for message in messages %}
+				<p>{{ message }}</p>
+			{% endfor %}
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+	{% endfor %}
 </header>

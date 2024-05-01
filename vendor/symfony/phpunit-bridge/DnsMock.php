@@ -36,13 +36,18 @@ class DnsMock
      * Configures the mock values for DNS queries.
      *
      * @param array $hosts Mocked hosts as keys, arrays of DNS records as returned by dns_get_record() as values
+     *
+     * @return void
      */
-    public static function withMockedHosts(array $hosts): void
+    public static function withMockedHosts(array $hosts)
     {
         self::$hosts = $hosts;
     }
 
-    public static function checkdnsrr($hostname, $type = 'MX'): bool
+    /**
+     * @return bool
+     */
+    public static function checkdnsrr($hostname, $type = 'MX')
     {
         if (!self::$hosts) {
             return \checkdnsrr($hostname, $type);
@@ -63,7 +68,10 @@ class DnsMock
         return false;
     }
 
-    public static function getmxrr($hostname, &$mxhosts, &$weight = null): bool
+    /**
+     * @return bool
+     */
+    public static function getmxrr($hostname, &$mxhosts, &$weight = null)
     {
         if (!self::$hosts) {
             return \getmxrr($hostname, $mxhosts, $weight);
@@ -161,7 +169,10 @@ class DnsMock
         return $records;
     }
 
-    public static function register($class): void
+    /**
+     * @return void
+     */
+    public static function register($class)
     {
         $self = static::class;
 

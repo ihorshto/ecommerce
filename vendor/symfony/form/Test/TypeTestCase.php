@@ -17,8 +17,15 @@ use Symfony\Component\Form\Test\Traits\ValidatorExtensionTrait;
 
 abstract class TypeTestCase extends FormIntegrationTestCase
 {
-    protected FormBuilder $builder;
-    protected EventDispatcherInterface $dispatcher;
+    /**
+     * @var FormBuilder
+     */
+    protected $builder;
+
+    /**
+     * @var EventDispatcherInterface
+     */
+    protected $dispatcher;
 
     protected function setUp(): void
     {

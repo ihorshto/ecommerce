@@ -37,12 +37,18 @@ class Packages
         }
     }
 
-    public function setDefaultPackage(PackageInterface $defaultPackage): void
+    /**
+     * @return void
+     */
+    public function setDefaultPackage(PackageInterface $defaultPackage)
     {
         $this->defaultPackage = $defaultPackage;
     }
 
-    public function addPackage(string $name, PackageInterface $package): void
+    /**
+     * @return void
+     */
+    public function addPackage(string $name, PackageInterface $package)
     {
         $this->packages[$name] = $package;
     }
