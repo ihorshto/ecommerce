@@ -45,7 +45,7 @@ class RegisterController extends AbstractController
                 "Le compte {$user->getEmail()} a bien été créé"
             );
 
-            return $this->redirectToRoute('compte');
+            return $this->redirectToRoute('home');
         }
         
         return $this->render('register/index.html.twig',[

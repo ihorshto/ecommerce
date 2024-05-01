@@ -87,16 +87,13 @@ class __TwigTemplate_bf05edcb413c69cf82d36bc709167605 extends Template
 
         // line 5
         echo "\t<h1>Mon compte</h1>
-\tBienvenu dans votre compte - Vous pourrez gérer toutes vos informations personnelles dans cet espace.
+\tBienvenu
+\t";
+        // line 7
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 7, $this->source); })()), "user", [], "any", false, false, false, 7), "firstName", [], "any", false, false, false, 7), "html", null, true);
+        echo "
+\tdans votre compte - Vous pourrez gérer toutes vos informations personnelles dans cet espace.
 \t<br>
-\t";
-        // line 8
-        echo $this->extensions['Symfony\Bridge\Twig\Extension\DumpExtension']->dump($this->env, $context, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 8, $this->source); })()));
-        echo "
-\t";
-        // line 9
-        echo $this->extensions['Symfony\Bridge\Twig\Extension\DumpExtension']->dump($this->env, $context, twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 9, $this->source); })()), "flashes", [], "any", false, false, false, 9));
-        echo "
 \t<br>
 \t- Modifier mon mot de passe
 \t<br>
@@ -134,7 +131,7 @@ class __TwigTemplate_bf05edcb413c69cf82d36bc709167605 extends Template
      */
     public function getDebugInfo()
     {
-        return array (  98 => 9,  94 => 8,  89 => 5,  79 => 4,  59 => 2,  36 => 1,);
+        return array (  93 => 7,  89 => 5,  79 => 4,  59 => 2,  36 => 1,);
     }
 
     public function getSourceContext()
@@ -144,10 +141,10 @@ class __TwigTemplate_bf05edcb413c69cf82d36bc709167605 extends Template
 {% endblock %}
 {% block content %}
 \t<h1>Mon compte</h1>
-\tBienvenu dans votre compte - Vous pourrez gérer toutes vos informations personnelles dans cet espace.
+\tBienvenu
+\t{{app.user.firstName}}
+\tdans votre compte - Vous pourrez gérer toutes vos informations personnelles dans cet espace.
 \t<br>
-\t{{ dump(app) }}
-\t{{ dump(app.flashes) }}
 \t<br>
 \t- Modifier mon mot de passe
 \t<br>

@@ -3,10 +3,10 @@
 {% endblock %}
 {% block content %}
 	<h1>Mon compte</h1>
-	Bienvenu dans votre compte - Vous pourrez gérer toutes vos informations personnelles dans cet espace.
+	Bienvenu
+	{{app.user.firstName}}
+	dans votre compte - Vous pourrez gérer toutes vos informations personnelles dans cet espace.
 	<br>
-	{{ dump(app) }}
-	{{ dump(app.flashes) }}
 	<br>
 	- Modifier mon mot de passe
 	<br>
