@@ -28,7 +28,7 @@ class PercentToLocalizedStringTransformer implements DataTransformerInterface
     public const FRACTIONAL = 'fractional';
     public const INTEGER = 'integer';
 
-    protected static array $types = [
+    protected static $types = [
         self::FRACTIONAL,
         self::INTEGER,
     ];

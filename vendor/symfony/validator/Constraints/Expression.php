@@ -17,6 +17,9 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Exception\LogicException;
 
 /**
+ * @Annotation
+ * @Target({"CLASS", "PROPERTY", "METHOD", "ANNOTATION"})
+ *
  * @author Fabien Potencier <fabien@symfony.com>
  * @author Bernhard Schussek <bschussek@gmail.com>
  */
@@ -29,9 +32,14 @@ class Expression extends Constraint
         self::EXPRESSION_FAILED_ERROR => 'EXPRESSION_FAILED_ERROR',
     ];
 
-    public string $message = 'This value is not valid.';
-    public string|ExpressionObject|null $expression = null;
-    public array $values = [];
+    /**
+     * @deprecated since Symfony 6.1, use const ERROR_NAMES instead
+     */
+    protected static $errorNames = self::ERROR_NAMES;
+
+    public $message = 'This value is not valid.';
+    public $expression;
+    public $values = [];
     public bool $negate = true;
 
     public function __construct(

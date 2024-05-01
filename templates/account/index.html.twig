@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+{% block title %}Mon compte - Ma boutique
+{% endblock %}
+{% block content %}
+	<h1>Mon compte</h1>
+	Bienvenu dans votre compte - Vous pourrez gérer toutes vos informations personnelles dans cet espace.
+	<br>
+	{{ dump(app) }}
+	{{ dump(app.flashes) }}
+	<br>
+	- Modifier mon mot de passe
+	<br>
+	- Ajouter mes adresses
+	<br>
+	- Mes commandes
+	<br>
+{% endblock %}

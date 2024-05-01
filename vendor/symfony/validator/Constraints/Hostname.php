@@ -14,6 +14,9 @@ namespace Symfony\Component\Validator\Constraints;
 use Symfony\Component\Validator\Constraint;
 
 /**
+ * @Annotation
+ * @Target({"PROPERTY", "METHOD", "ANNOTATION"})
+ *
  * @author Dmitrii Poddubnyi <dpoddubny@gmail.com>
  */
 #[\Attribute(\Attribute::TARGET_PROPERTY | \Attribute::TARGET_METHOD | \Attribute::IS_REPEATABLE)]
@@ -25,8 +28,13 @@ class Hostname extends Constraint
         self::INVALID_HOSTNAME_ERROR => 'INVALID_HOSTNAME_ERROR',
     ];
 
-    public string $message = 'This value is not a valid hostname.';
-    public bool $requireTld = true;
+    /**
+     * @deprecated since Symfony 6.1, use const ERROR_NAMES instead
+     */
+    protected static $errorNames = self::ERROR_NAMES;
+
+    public $message = 'This value is not a valid hostname.';
+    public $requireTld = true;
 
     public function __construct(
         ?array $options = null,

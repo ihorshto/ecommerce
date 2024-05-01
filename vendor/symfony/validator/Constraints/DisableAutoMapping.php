@@ -17,8 +17,10 @@ use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 /**
  * Disables auto mapping.
  *
- * Using the attribute on a property has higher precedence than using it on a class,
+ * Using the annotations on a property has higher precedence than using it on a class,
  * which has higher precedence than any configuration that might be defined outside the class.
+ *
+ * @Annotation
  *
  * @author Kévin Dunglas <dunglas@gmail.com>
  */

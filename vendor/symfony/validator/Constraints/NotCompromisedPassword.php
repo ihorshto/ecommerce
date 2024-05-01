@@ -16,6 +16,9 @@ use Symfony\Component\Validator\Constraint;
 /**
  * Checks if a password has been leaked in a data breach.
  *
+ * @Annotation
+ * @Target({"PROPERTY", "METHOD", "ANNOTATION"})
+ *
  * @author Kévin Dunglas <dunglas@gmail.com>
  */
 #[\Attribute(\Attribute::TARGET_PROPERTY | \Attribute::TARGET_METHOD | \Attribute::IS_REPEATABLE)]
@@ -27,9 +30,14 @@ class NotCompromisedPassword extends Constraint
         self::COMPROMISED_PASSWORD_ERROR => 'COMPROMISED_PASSWORD_ERROR',
     ];
 
-    public string $message = 'This password has been leaked in a data breach, it must not be used. Please use another password.';
-    public int $threshold = 1;
-    public bool $skipOnError = false;
+    /**
+     * @deprecated since Symfony 6.1, use const ERROR_NAMES instead
+     */
+    protected static $errorNames = self::ERROR_NAMES;
+
+    public $message = 'This password has been leaked in a data breach, it must not be used. Please use another password.';
+    public $threshold = 1;
+    public $skipOnError = false;
 
     public function __construct(
         ?array $options = null,

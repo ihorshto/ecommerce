@@ -24,11 +24,11 @@ use Symfony\Component\Form\FormInterface;
  */
 class ResizeFormListener implements EventSubscriberInterface
 {
-    protected string $type;
-    protected array $options;
-    protected array $prototypeOptions;
-    protected bool $allowAdd;
-    protected bool $allowDelete;
+    protected $type;
+    protected $options;
+    protected $prototypeOptions;
+    protected $allowAdd;
+    protected $allowDelete;
 
     private \Closure|bool $deleteEmpty;
 
@@ -52,7 +52,10 @@ class ResizeFormListener implements EventSubscriberInterface
         ];
     }
 
-    public function preSetData(FormEvent $event): void
+    /**
+     * @return void
+     */
+    public function preSetData(FormEvent $event)
     {
         $form = $event->getForm();
         $data = $event->getData() ?? [];
@@ -74,7 +77,10 @@ class ResizeFormListener implements EventSubscriberInterface
         }
     }
 
-    public function preSubmit(FormEvent $event): void
+    /**
+     * @return void
+     */
+    public function preSubmit(FormEvent $event)
     {
         $form = $event->getForm();
         $data = $event->getData();
@@ -104,7 +110,10 @@ class ResizeFormListener implements EventSubscriberInterface
         }
     }
 
-    public function onSubmit(FormEvent $event): void
+    /**
+     * @return void
+     */
+    public function onSubmit(FormEvent $event)
     {
         $form = $event->getForm();
         $data = $event->getData() ?? [];

@@ -34,7 +34,10 @@ abstract class AbstractComparisonValidator extends ConstraintValidator
         $this->propertyAccessor = $propertyAccessor;
     }
 
-    public function validate(mixed $value, Constraint $constraint): void
+    /**
+     * @return void
+     */
+    public function validate(mixed $value, Constraint $constraint)
     {
         if (!$constraint instanceof AbstractComparison) {
             throw new UnexpectedTypeException($constraint, AbstractComparison::class);

@@ -14,6 +14,9 @@ namespace Symfony\Component\Validator\Constraints;
 use Symfony\Component\Validator\Constraint;
 
 /**
+ * @Annotation
+ * @Target({"PROPERTY", "METHOD", "ANNOTATION"})
+ *
  * @author Bernhard Schussek <bschussek@gmail.com>
  */
 #[\Attribute(\Attribute::TARGET_PROPERTY | \Attribute::TARGET_METHOD | \Attribute::IS_REPEATABLE)]
@@ -27,8 +30,13 @@ class Time extends Constraint
         self::INVALID_TIME_ERROR => 'INVALID_TIME_ERROR',
     ];
 
-    public bool $withSeconds = true;
-    public string $message = 'This value is not a valid time.';
+    /**
+     * @deprecated since Symfony 6.1, use const ERROR_NAMES instead
+     */
+    protected static $errorNames = self::ERROR_NAMES;
+
+    public $withSeconds = true;
+    public $message = 'This value is not a valid time.';
 
     public function __construct(
         ?array $options = null,

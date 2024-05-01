@@ -26,6 +26,7 @@ use Symfony\Component\Form\Console\Helper\DescriptorHelper;
 use Symfony\Component\Form\Extension\Core\CoreExtension;
 use Symfony\Component\Form\FormRegistryInterface;
 use Symfony\Component\Form\FormTypeInterface;
+use Symfony\Component\HttpKernel\Debug\FileLinkFormatter as LegacyFileLinkFormatter;
 
 /**
  * A console command for retrieving information about form types.
@@ -40,9 +41,9 @@ class DebugCommand extends Command
     private array $types;
     private array $extensions;
     private array $guessers;
-    private ?FileLinkFormatter $fileLinkFormatter;
+    private FileLinkFormatter|LegacyFileLinkFormatter|null $fileLinkFormatter;
 
-    public function __construct(FormRegistryInterface $formRegistry, array $namespaces = ['Symfony\Component\Form\Extension\Core\Type'], array $types = [], array $extensions = [], array $guessers = [], ?FileLinkFormatter $fileLinkFormatter = null)
+    public function __construct(FormRegistryInterface $formRegistry, array $namespaces = ['Symfony\Component\Form\Extension\Core\Type'], array $types = [], array $extensions = [], array $guessers = [], FileLinkFormatter|LegacyFileLinkFormatter|null $fileLinkFormatter = null)
     {
         parent::__construct();
 
@@ -54,7 +55,10 @@ class DebugCommand extends Command
         $this->fileLinkFormatter = $fileLinkFormatter;
     }
 
-    protected function configure(): void
+    /**
+     * @return void
+     */
+    protected function configure()
     {
         $this
             ->setDefinition([

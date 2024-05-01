@@ -18,10 +18,7 @@
 			{% include "partials/header.html.twig" %}
 			{# End Header #}
 
-			{% block content %}{% endblock %}
-
-			{% block body %}
-
+			{% block content %}
 				{# Caroussel #}
 				{% if block('carrousel') is defined %}
 
@@ -86,8 +83,7 @@
 
 
 			{# Footer #}
-			{% include "partials/footer.html.twig" %}
-			{# End Footer #}
+			{% include "partials/footer.html.twig" %}{# End Footer #}
 
 			{# Scripts JS #}<script src="{{asset('assets/js/bootstrap.bundle.min.js')}}"> </script>
 			<script src="/jquery/jquery-3.6.0.min.js"></script>

@@ -15,12 +15,14 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 
 /**
+ * @Annotation
+ *
  * @author Bernhard Schussek <bschussek@gmail.com>
  */
 #[\Attribute(\Attribute::TARGET_CLASS)]
 class Traverse extends Constraint
 {
-    public bool $traverse = true;
+    public $traverse = true;
 
     public function __construct(bool|array|null $traverse = null)
     {

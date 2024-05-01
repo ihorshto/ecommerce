@@ -14,6 +14,12 @@ namespace Symfony\Component\Serializer\Attribute;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 
 /**
+ * Annotation class for @DiscriminatorMap().
+ *
+ * @Annotation
+ * @NamedArgumentConstructor
+ * @Target({"CLASS"})
+ *
  * @author Samuel Roze <samuel.roze@gmail.com>
  */
 #[\Attribute(\Attribute::TARGET_CLASS)]

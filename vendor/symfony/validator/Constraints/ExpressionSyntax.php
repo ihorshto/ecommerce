@@ -14,6 +14,9 @@ namespace Symfony\Component\Validator\Constraints;
 use Symfony\Component\Validator\Constraint;
 
 /**
+ * @Annotation
+ * @Target({"PROPERTY", "METHOD", "ANNOTATION"})
+ *
  * @author Andrey Sevastianov <mrpkmail@gmail.com>
  */
 #[\Attribute(\Attribute::TARGET_PROPERTY | \Attribute::TARGET_METHOD | \Attribute::IS_REPEATABLE)]
@@ -25,9 +28,9 @@ class ExpressionSyntax extends Constraint
         self::EXPRESSION_SYNTAX_ERROR => 'EXPRESSION_SYNTAX_ERROR',
     ];
 
-    public string $message = 'This value should be a valid expression.';
-    public ?string $service = null;
-    public ?array $allowedVariables = null;
+    public $message = 'This value should be a valid expression.';
+    public $service;
+    public $allowedVariables;
 
     public function __construct(?array $options = null, ?string $message = null, ?string $service = null, ?array $allowedVariables = null, ?array $groups = null, mixed $payload = null)
     {

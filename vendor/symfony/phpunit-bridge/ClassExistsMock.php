@@ -24,8 +24,10 @@ class ClassExistsMock
      * Configures the classes to be checked upon existence.
      *
      * @param array $classes Mocked class names as keys (case-sensitive, without leading root namespace slash) and booleans as values
+     *
+     * @return void
      */
-    public static function withMockedClasses(array $classes): void
+    public static function withMockedClasses(array $classes)
     {
         self::$classes = $classes;
     }
@@ -34,42 +36,59 @@ class ClassExistsMock
      * Configures the enums to be checked upon existence.
      *
      * @param array $enums Mocked enums names as keys (case-sensitive, without leading root namespace slash) and booleans as values
+     *
+     * @return void
      */
-    public static function withMockedEnums(array $enums): void
+    public static function withMockedEnums(array $enums)
     {
         self::$enums = $enums;
         self::$classes += $enums;
     }
 
-    public static function class_exists($name, $autoload = true): bool
+    /**
+     * @return bool
+     */
+    public static function class_exists($name, $autoload = true)
     {
         $name = ltrim($name, '\\');
 
         return isset(self::$classes[$name]) ? (bool) self::$classes[$name] : \class_exists($name, $autoload);
     }
 
-    public static function interface_exists($name, $autoload = true): bool
+    /**
+     * @return bool
+     */
+    public static function interface_exists($name, $autoload = true)
     {
         $name = ltrim($name, '\\');
 
         return isset(self::$classes[$name]) ? (bool) self::$classes[$name] : \interface_exists($name, $autoload);
     }
 
-    public static function trait_exists($name, $autoload = true): bool
+    /**
+     * @return bool
+     */
+    public static function trait_exists($name, $autoload = true)
     {
         $name = ltrim($name, '\\');
 
         return isset(self::$classes[$name]) ? (bool) self::$classes[$name] : \trait_exists($name, $autoload);
     }
 
-    public static function enum_exists($name, $autoload = true):bool
+    /**
+     * @return bool
+     */
+    public static function enum_exists($name, $autoload = true)
     {
         $name = ltrim($name, '\\');
 
         return isset(self::$enums[$name]) ? (bool) self::$enums[$name] : \enum_exists($name, $autoload);
     }
 
-    public static function register($class): void
+    /**
+     * @return void
+     */
+    public static function register($class)
     {
         $self = static::class;
 

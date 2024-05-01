@@ -31,7 +31,10 @@ class RangeValidator extends ConstraintValidator
         $this->propertyAccessor = $propertyAccessor;
     }
 
-    public function validate(mixed $value, Constraint $constraint): void
+    /**
+     * @return void
+     */
+    public function validate(mixed $value, Constraint $constraint)
     {
         if (!$constraint instanceof Range) {
             throw new UnexpectedTypeException($constraint, Range::class);

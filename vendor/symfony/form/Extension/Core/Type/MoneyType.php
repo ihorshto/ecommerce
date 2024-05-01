@@ -22,9 +22,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MoneyType extends AbstractType
 {
-    protected static array $patterns = [];
+    protected static $patterns = [];
 
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    /**
+     * @return void
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         // Values used in HTML5 number inputs should be formatted as in "1234.5", ie. 'en' format without grouping,
         // according to https://www.w3.org/TR/html51/sec-forms.html#date-time-and-number-formats
@@ -39,7 +42,10 @@ class MoneyType extends AbstractType
         ;
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options): void
+    /**
+     * @return void
+     */
+    public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['money_pattern'] = self::getPattern($options['currency']);
 
@@ -48,7 +54,10 @@ class MoneyType extends AbstractType
         }
     }
 
-    public function configureOptions(OptionsResolver $resolver): void
+    /**
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'scale' => 2,
@@ -94,8 +103,10 @@ class MoneyType extends AbstractType
      *
      * The pattern contains the placeholder "{{ widget }}" where the HTML tag should
      * be inserted
+     *
+     * @return string
      */
-    protected static function getPattern(?string $currency): string
+    protected static function getPattern(?string $currency)
     {
         if (!$currency) {
             return '{{ widget }}';

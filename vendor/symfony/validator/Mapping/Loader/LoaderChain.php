@@ -25,7 +25,7 @@ use Symfony\Component\Validator\Mapping\ClassMetadata;
  */
 class LoaderChain implements LoaderInterface
 {
-    protected array $loaders;
+    protected $loaders;
 
     /**
      * @param LoaderInterface[] $loaders The metadata loaders to use

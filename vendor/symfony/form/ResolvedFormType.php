@@ -92,7 +92,10 @@ class ResolvedFormType implements ResolvedFormTypeInterface
         return $this->newView($parent);
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    /**
+     * @return void
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->parent?->buildForm($builder, $options);
 
@@ -103,7 +106,10 @@ class ResolvedFormType implements ResolvedFormTypeInterface
         }
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options): void
+    /**
+     * @return void
+     */
+    public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $this->parent?->buildView($view, $form, $options);
 
@@ -114,7 +120,10 @@ class ResolvedFormType implements ResolvedFormTypeInterface
         }
     }
 
-    public function finishView(FormView $view, FormInterface $form, array $options): void
+    /**
+     * @return void
+     */
+    public function finishView(FormView $view, FormInterface $form, array $options)
     {
         $this->parent?->finishView($view, $form, $options);
 

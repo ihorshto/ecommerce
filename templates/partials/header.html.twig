@@ -26,9 +26,9 @@
 	</nav>
 	{{ dump(app.flashes) }}
 	{#
-		 {{ dump(app) }}
-		 {{ dump(app.flashes) }}
-		 #}
+			 {{ dump(app) }}
+			 {{ dump(app.flashes) }}
+			 #}
 	{% for label, messages in app.flashes %}
 		<div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
 			{% for message in messages %}

@@ -15,6 +15,9 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Exception\InvalidArgumentException;
 
 /**
+ * @Annotation
+ * @Target({"PROPERTY", "METHOD", "ANNOTATION"})
+ *
  * @author Bernhard Schussek <bschussek@gmail.com>
  */
 #[\Attribute(\Attribute::TARGET_PROPERTY | \Attribute::TARGET_METHOD | \Attribute::IS_REPEATABLE)]
@@ -26,10 +29,15 @@ class Regex extends Constraint
         self::REGEX_FAILED_ERROR => 'REGEX_FAILED_ERROR',
     ];
 
-    public string $message = 'This value is not valid.';
-    public ?string $pattern = null;
-    public ?string $htmlPattern = null;
-    public bool $match = true;
+    /**
+     * @deprecated since Symfony 6.1, use const ERROR_NAMES instead
+     */
+    protected static $errorNames = self::ERROR_NAMES;
+
+    public $message = 'This value is not valid.';
+    public $pattern;
+    public $htmlPattern;
+    public $match = true;
     /** @var callable|null */
     public $normalizer;
 

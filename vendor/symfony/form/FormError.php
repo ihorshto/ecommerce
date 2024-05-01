@@ -20,9 +20,9 @@ use Symfony\Component\Form\Exception\BadMethodCallException;
  */
 class FormError
 {
-    protected string $messageTemplate;
-    protected array $messageParameters;
-    protected ?int $messagePluralization;
+    protected $messageTemplate;
+    protected $messageParameters;
+    protected $messagePluralization;
 
     private string $message;
     private mixed $cause;
@@ -99,9 +99,11 @@ class FormError
      *
      * This method must only be called once.
      *
+     * @return void
+     *
      * @throws BadMethodCallException If the method is called more than once
      */
-    public function setOrigin(FormInterface $origin): void
+    public function setOrigin(FormInterface $origin)
     {
         if (null !== $this->origin) {
             throw new BadMethodCallException('setOrigin() must only be called once.');

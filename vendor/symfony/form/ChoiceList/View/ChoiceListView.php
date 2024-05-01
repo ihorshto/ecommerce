@@ -22,8 +22,8 @@ namespace Symfony\Component\Form\ChoiceList\View;
  */
 class ChoiceListView
 {
-    public array $choices;
-    public array $preferredChoices;
+    public $choices;
+    public $preferredChoices;
 
     /**
      * Creates a new choice list view.

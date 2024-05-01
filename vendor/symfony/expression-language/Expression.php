@@ -18,7 +18,7 @@ namespace Symfony\Component\ExpressionLanguage;
  */
 class Expression
 {
-    protected string $expression;
+    protected $expression;
 
     public function __construct(string $expression)
     {

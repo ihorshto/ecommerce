@@ -70,7 +70,7 @@ class Configuration
      * @param string      $baselineFile     The path to the baseline file
      * @param string|null $logFile          The path to the log file
      */
-    private function __construct(array $thresholds = [], string $regex = '', array $verboseOutput = [], string $ignoreFile = '', bool $generateBaseline = false, string $baselineFile = '', ?string $logFile = null)
+    private function __construct(array $thresholds = [], $regex = '', $verboseOutput = [], $ignoreFile = '', $generateBaseline = false, $baselineFile = '', $logFile = null)
     {
         $groups = ['total', 'indirect', 'direct', 'self'];
 
@@ -279,7 +279,10 @@ class Configuration
         file_put_contents($this->baselineFile, json_encode($map, \JSON_PRETTY_PRINT | \JSON_UNESCAPED_SLASHES));
     }
 
-    public function shouldDisplayStackTrace(string $message): bool
+    /**
+     * @param string $message
+     */
+    public function shouldDisplayStackTrace($message): bool
     {
         return '' !== $this->regex && preg_match($this->regex, $message);
     }
@@ -305,9 +308,10 @@ class Configuration
     }
 
     /**
-     * @param string $serializedConfiguration An encoded string, for instance max[total]=1234&max[indirect]=42
+     * @param string $serializedConfiguration an encoded string, for instance
+     *                                        max[total]=1234&max[indirect]=42
      */
-    public static function fromUrlEncodedString(string $serializedConfiguration): self
+    public static function fromUrlEncodedString($serializedConfiguration): self
     {
         parse_str($serializedConfiguration, $normalizedConfiguration);
         foreach (array_keys($normalizedConfiguration) as $key) {

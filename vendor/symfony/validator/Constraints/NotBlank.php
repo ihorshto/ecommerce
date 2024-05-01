@@ -15,6 +15,9 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Exception\InvalidArgumentException;
 
 /**
+ * @Annotation
+ * @Target({"PROPERTY", "METHOD", "ANNOTATION"})
+ *
  * @author Bernhard Schussek <bschussek@gmail.com>
  * @author Kévin Dunglas <dunglas@gmail.com>
  */
@@ -27,8 +30,13 @@ class NotBlank extends Constraint
         self::IS_BLANK_ERROR => 'IS_BLANK_ERROR',
     ];
 
-    public string $message = 'This value should not be blank.';
-    public bool $allowNull = false;
+    /**
+     * @deprecated since Symfony 6.1, use const ERROR_NAMES instead
+     */
+    protected static $errorNames = self::ERROR_NAMES;
+
+    public $message = 'This value should not be blank.';
+    public $allowNull = false;
     /** @var callable|null */
     public $normalizer;
 

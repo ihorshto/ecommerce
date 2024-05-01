@@ -23,12 +23,16 @@ use Symfony\Component\Serializer\Exception\NotNormalizableValueException;
  *
  * @final
  */
-class ArrayDenormalizer implements DenormalizerInterface, DenormalizerAwareInterface
+class ArrayDenormalizer implements ContextAwareDenormalizerInterface, DenormalizerAwareInterface, CacheableSupportsMethodInterface
 {
     use DenormalizerAwareTrait;
 
     public function setDenormalizer(DenormalizerInterface $denormalizer): void
     {
+        if (!method_exists($denormalizer, 'getSupportedTypes')) {
+            trigger_deprecation('symfony/serializer', '6.3', 'Not implementing the "DenormalizerInterface::getSupportedTypes()" in "%s" is deprecated.', get_debug_type($denormalizer));
+        }
+
         $this->denormalizer = $denormalizer;
     }
 
@@ -80,7 +84,20 @@ class ArrayDenormalizer implements DenormalizerInterface, DenormalizerAwareInter
             && $this->denormalizer->supportsDenormalization($data, substr($type, 0, -2), $format, $context);
     }
 
-    private function validateKeyType(array $builtinTypes, mixed $key, string $path): void
+    /**
+     * @deprecated since Symfony 6.3, use "getSupportedTypes()" instead
+     */
+    public function hasCacheableSupportsMethod(): bool
+    {
+        trigger_deprecation('symfony/serializer', '6.3', 'The "%s()" method is deprecated, use "getSupportedTypes()" instead.', __METHOD__);
+
+        return $this->denormalizer instanceof CacheableSupportsMethodInterface && $this->denormalizer->hasCacheableSupportsMethod();
+    }
+
+    /**
+     * @param mixed $key
+     */
+    private function validateKeyType(array $builtinTypes, $key, string $path): void
     {
         if (!$builtinTypes) {
             return;
