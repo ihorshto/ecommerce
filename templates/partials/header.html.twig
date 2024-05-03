@@ -16,6 +16,15 @@
 								<small>({{app.user.firstName}})</small>
 							</a>
 						</li>
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" href="#">Nos produits</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" href="#">Qui sommes-nous ?</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" href="#">Contact</a>
+						</li>
 					{% else %}
 						<li class="nav-item active">
 							<a class="nav-link" href="{{ path('register') }}">Inscription</a>
@@ -30,9 +39,9 @@
 	</nav>
 	{# {{ dump(app.flashes) }} #}
 	{#
-												 {{ dump(app) }}
-												 {{ dump(app.flashes) }}
-												 #}
+													 {{ dump(app) }}
+													 {{ dump(app.flashes) }}
+													 #}
 	{% for label, messages in app.flashes %}
 		<div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
 			{% for message in messages %}

@@ -41,7 +41,7 @@ class __TwigTemplate_be7300e4767924d640e990fb2fd6c645 extends Template
 
         // line 1
         echo "<!-- FOOTER -->
-<footer class=\"container\">
+<footer class=\"footer\">
 \t<p class=\"float-end\">
 \t\t<a href=\"#\">Back to top</a>
 \t</p>
@@ -79,7 +79,7 @@ class __TwigTemplate_be7300e4767924d640e990fb2fd6c645 extends Template
     public function getSourceContext()
     {
         return new Source("<!-- FOOTER -->
-<footer class=\"container\">
+<footer class=\"footer\">
 \t<p class=\"float-end\">
 \t\t<a href=\"#\">Back to top</a>
 \t</p>

@@ -30,6 +30,7 @@ un de 3 caractères et au maximum 20 caractères']])
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'validation_groups' => ['register']
         ]);
     }
 }

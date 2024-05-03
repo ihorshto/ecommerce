@@ -95,7 +95,10 @@ class __TwigTemplate_bf05edcb413c69cf82d36bc709167605 extends Template
 \tdans votre compte - Vous pourrez gérer toutes vos informations personnelles dans cet espace.
 \t<br>
 \t<br>
-\t- Modifier mon mot de passe
+\t<a href=\"";
+        // line 11
+        echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("account_password");
+        echo "\">Modifier mon mot de passe</a>
 \t<br>
 \t- Ajouter mes adresses
 \t<br>
@@ -131,7 +134,7 @@ class __TwigTemplate_bf05edcb413c69cf82d36bc709167605 extends Template
      */
     public function getDebugInfo()
     {
-        return array (  93 => 7,  89 => 5,  79 => 4,  59 => 2,  36 => 1,);
+        return array (  100 => 11,  93 => 7,  89 => 5,  79 => 4,  59 => 2,  36 => 1,);
     }
 
     public function getSourceContext()
@@ -146,7 +149,7 @@ class __TwigTemplate_bf05edcb413c69cf82d36bc709167605 extends Template
 \tdans votre compte - Vous pourrez gérer toutes vos informations personnelles dans cet espace.
 \t<br>
 \t<br>
-\t- Modifier mon mot de passe
+\t<a href=\"{{path('account_password')}}\">Modifier mon mot de passe</a>
 \t<br>
 \t- Ajouter mes adresses
 \t<br>
