@@ -1,0 +1,8 @@
+#Product_illustration_file {
+    display: block !important;
+}
+
+.field-image .input-group {
+    position: inherit;
+    display: block;
+}
