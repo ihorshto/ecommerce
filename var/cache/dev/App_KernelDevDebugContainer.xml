@@ -26,6 +26,8 @@
       <parameter key="MonologBundle">Symfony\Bundle\MonologBundle\MonologBundle</parameter>
       <parameter key="MakerBundle">Symfony\Bundle\MakerBundle\MakerBundle</parameter>
       <parameter key="EasyAdminBundle">EasyCorp\Bundle\EasyAdminBundle\EasyAdminBundle</parameter>
+      <parameter key="DoctrineFixturesBundle">Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle</parameter>
+      <parameter key="StofDoctrineExtensionsBundle">Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle</parameter>
     </parameter>
     <parameter key="kernel.bundles_metadata" type="collection">
       <parameter key="FrameworkBundle" type="collection">
@@ -79,6 +81,14 @@
       <parameter key="EasyAdminBundle" type="collection">
         <parameter key="path">/Applications/MAMP/htdocs/myboutique/vendor/easycorp/easyadmin-bundle/src</parameter>
         <parameter key="namespace">EasyCorp\Bundle\EasyAdminBundle</parameter>
+      </parameter>
+      <parameter key="DoctrineFixturesBundle" type="collection">
+        <parameter key="path">/Applications/MAMP/htdocs/myboutique/vendor/doctrine/doctrine-fixtures-bundle</parameter>
+        <parameter key="namespace">Doctrine\Bundle\FixturesBundle</parameter>
+      </parameter>
+      <parameter key="StofDoctrineExtensionsBundle" type="collection">
+        <parameter key="path">/Applications/MAMP/htdocs/myboutique/vendor/stof/doctrine-extensions-bundle/src</parameter>
+        <parameter key="namespace">Stof\DoctrineExtensionsBundle</parameter>
       </parameter>
     </parameter>
     <parameter key="kernel.charset">UTF-8</parameter>
@@ -255,6 +265,20 @@
         </parameter>
       </parameter>
     </parameter>
+    <parameter key="stof_doctrine_extensions.listener.sluggable.class">Gedmo\Sluggable\SluggableListener</parameter>
+    <parameter key="stof_doctrine_extensions.default_locale">fr_FR</parameter>
+    <parameter key="stof_doctrine_extensions.translation_fallback">false</parameter>
+    <parameter key="stof_doctrine_extensions.persist_default_translation">false</parameter>
+    <parameter key="stof_doctrine_extensions.skip_translation_on_load">false</parameter>
+    <parameter key="stof_doctrine_extensions.listener.translatable.class">Gedmo\Translatable\TranslatableListener</parameter>
+    <parameter key="stof_doctrine_extensions.listener.timestampable.class">Gedmo\Timestampable\TimestampableListener</parameter>
+    <parameter key="stof_doctrine_extensions.listener.blameable.class">Gedmo\Blameable\BlameableListener</parameter>
+    <parameter key="stof_doctrine_extensions.listener.tree.class">Gedmo\Tree\TreeListener</parameter>
+    <parameter key="stof_doctrine_extensions.listener.loggable.class">Gedmo\Loggable\LoggableListener</parameter>
+    <parameter key="stof_doctrine_extensions.listener.sortable.class">Gedmo\Sortable\SortableListener</parameter>
+    <parameter key="stof_doctrine_extensions.listener.softdeleteable.class">Gedmo\SoftDeleteable\SoftDeleteableListener</parameter>
+    <parameter key="stof_doctrine_extensions.listener.uploadable.class">Gedmo\Uploadable\UploadableListener</parameter>
+    <parameter key="stof_doctrine_extensions.listener.reference_integrity.class">Gedmo\ReferenceIntegrity\ReferenceIntegrityListener</parameter>
     <parameter key="data_collector.templates" type="collection">
       <parameter key="data_collector.request" type="collection">
         <parameter>request</parameter>
@@ -419,6 +443,13 @@
         <argument type="service" id=".service_locator.jUv.zyj.App\Controller\HomeController"/>
       </call>
     </service>
+    <service id="App\Controller\ProductController" class="App\Controller\ProductController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="container.service_subscriber"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.jUv.zyj.App\Controller\ProductController"/>
+      </call>
+    </service>
     <service id="App\Controller\RegisterController" class="App\Controller\RegisterController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
       <tag name="container.service_subscriber"/>
@@ -434,6 +465,16 @@
       <call method="setContainer">
         <argument type="service" id=".service_locator.jUv.zyj.App\Controller\SecurityController"/>
       </call>
+    </service>
+    <service id="App\DataFixtures\AppFixtures" class="App\DataFixtures\AppFixtures" autowire="true" autoconfigure="true">
+      <tag name="doctrine.fixture.orm"/>
+    </service>
+    <service id="App\DataFixtures\ProductsFixtures" class="App\DataFixtures\ProductsFixtures" autowire="true" autoconfigure="true">
+      <tag name="doctrine.fixture.orm"/>
+    </service>
+    <service id="App\DataFixtures\UsersFixtures" class="App\DataFixtures\UsersFixtures" autowire="true" autoconfigure="true">
+      <tag name="doctrine.fixture.orm"/>
+      <argument type="service" id="security.user_password_hasher"/>
     </service>
     <service id="App\Form\ChangePasswordType" class="App\Form\ChangePasswordType" autowire="true" autoconfigure="true">
       <tag name="form.type"/>
@@ -486,7 +527,7 @@
     </service>
     <service id="argument_resolver.service" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">
       <tag priority="-50" name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">controller.argument_value_resolver</tag>
-      <argument type="service" id=".service_locator.lBitEn."/>
+      <argument type="service" id=".service_locator.S9MuWhz"/>
     </service>
     <service id="argument_resolver.default" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver">
       <tag priority="-100" name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver">controller.argument_value_resolver</tag>
@@ -1295,6 +1336,7 @@
         <argument>/Applications/MAMP/htdocs/myboutique/vendor/symfony/validator/Resources/translations</argument>
         <argument>/Applications/MAMP/htdocs/myboutique/vendor/symfony/form/Resources/translations</argument>
         <argument>/Applications/MAMP/htdocs/myboutique/vendor/symfony/security-core/Resources/translations</argument>
+        <argument>/Applications/MAMP/htdocs/myboutique/vendor/easycorp/easyadmin-bundle/src/Resources/translations</argument>
       </argument>
       <argument type="collection">
         <argument>/Applications/MAMP/htdocs/myboutique/vendor/symfony/twig-bridge/Resources/views/Email</argument>
@@ -1321,6 +1363,7 @@
         <argument>/Applications/MAMP/htdocs/myboutique/vendor/symfony/validator/Resources/translations</argument>
         <argument>/Applications/MAMP/htdocs/myboutique/vendor/symfony/form/Resources/translations</argument>
         <argument>/Applications/MAMP/htdocs/myboutique/vendor/symfony/security-core/Resources/translations</argument>
+        <argument>/Applications/MAMP/htdocs/myboutique/vendor/easycorp/easyadmin-bundle/src/Resources/translations</argument>
       </argument>
       <argument type="collection">
         <argument>/Applications/MAMP/htdocs/myboutique/vendor/symfony/twig-bridge/Resources/views/Email</argument>
@@ -2481,6 +2524,8 @@
           <argument>/Applications/MAMP/htdocs/myboutique/vendor/symfony/security-bundle/translations</argument>
           <argument>/Applications/MAMP/htdocs/myboutique/vendor/symfony/monolog-bundle/translations</argument>
           <argument>/Applications/MAMP/htdocs/myboutique/vendor/symfony/maker-bundle/src/translations</argument>
+          <argument>/Applications/MAMP/htdocs/myboutique/vendor/doctrine/doctrine-fixtures-bundle/translations</argument>
+          <argument>/Applications/MAMP/htdocs/myboutique/vendor/stof/doctrine-extensions-bundle/src/translations</argument>
         </argument>
         <argument key="cache_vary" type="collection">
           <argument key="scanned_directories" type="collection">
@@ -2501,6 +2546,8 @@
             <argument>vendor/symfony/security-bundle/translations</argument>
             <argument>vendor/symfony/monolog-bundle/translations</argument>
             <argument>vendor/symfony/maker-bundle/src/translations</argument>
+            <argument>vendor/doctrine/doctrine-fixtures-bundle/translations</argument>
+            <argument>vendor/stof/doctrine-extensions-bundle/src/translations</argument>
           </argument>
         </argument>
       </argument>
@@ -3462,7 +3509,7 @@
     </service>
     <service id="argument_resolver.not_tagged_controller" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver">
       <tag name="controller.argument_value_resolver" priority="-200"/>
-      <argument type="service" id=".service_locator.lBitEn."/>
+      <argument type="service" id=".service_locator.S9MuWhz"/>
     </service>
     <service id="debug.log_processor" class="Symfony\Bridge\Monolog\Processor\DebugProcessor">
       <tag name="kernel.reset" method="reset"/>
@@ -3633,6 +3680,44 @@
     <service id="Symfony\Bundle\FrameworkBundle\Controller\TemplateController" class="Symfony\Bundle\FrameworkBundle\Controller\TemplateController" public="true">
       <argument type="service" id="twig" on-invalid="ignore"/>
     </service>
+    <service id="annotations.reader" class="Doctrine\Common\Annotations\AnnotationReader">
+      <call method="addGlobalIgnoredName">
+        <argument>required</argument>
+      </call>
+      <deprecated package="symfony/framework-bundle" version="6.4">The "%service_id%" service is deprecated without replacement.</deprecated>
+    </service>
+    <service id="annotations.cached_reader" class="Doctrine\Common\Annotations\PsrCachedReader">
+      <tag name="annotations.cached_reader"/>
+      <tag name="container.do_not_inline"/>
+      <argument type="service" id="annotations.reader"/>
+      <argument type="service">
+        <service class="Symfony\Component\Cache\Adapter\ArrayAdapter"/>
+      </argument>
+      <argument>true</argument>
+      <argument type="service_closure" id="annotations.cache_adapter"/>
+      <deprecated package="symfony/framework-bundle" version="6.4">The "%service_id%" service is deprecated without replacement.</deprecated>
+    </service>
+    <service id="annotations.filesystem_cache_adapter" class="Symfony\Component\Cache\Adapter\FilesystemAdapter">
+      <argument></argument>
+      <argument>0</argument>
+      <argument type="abstract">Cache-Directory</argument>
+      <deprecated package="symfony/framework-bundle" version="6.4">The "%service_id%" service is deprecated without replacement.</deprecated>
+    </service>
+    <service id="annotations.cache_warmer" class="Symfony\Bundle\FrameworkBundle\CacheWarmer\AnnotationsCacheWarmer">
+      <tag name="kernel.cache_warmer"/>
+      <argument type="service" id="annotations.reader"/>
+      <argument>/Applications/MAMP/htdocs/myboutique/var/cache/dev/annotations.php</argument>
+      <argument>#^Symfony\\(?:Component\\HttpKernel\\|Bundle\\FrameworkBundle\\Controller\\(?!.*Controller$))#</argument>
+      <argument>true</argument>
+      <argument>false</argument>
+      <deprecated package="symfony/framework-bundle" version="6.4">The "%service_id%" service is deprecated without replacement.</deprecated>
+    </service>
+    <service id="annotations.cache_adapter" class="Symfony\Component\Cache\Adapter\PhpArrayAdapter" constructor="create">
+      <tag name="container.hot_path"/>
+      <argument>/Applications/MAMP/htdocs/myboutique/var/cache/dev/annotations.php</argument>
+      <argument type="service" id="cache.annotations"/>
+      <deprecated package="symfony/framework-bundle" version="6.4">The "%service_id%" service is deprecated without replacement.</deprecated>
+    </service>
     <service id="property_accessor" class="Symfony\Component\PropertyAccess\PropertyAccessor">
       <argument>3</argument>
       <argument>2</argument>
@@ -3695,7 +3780,7 @@
       <tag name="serializer.normalizer" priority="-890"/>
     </service>
     <service id="serializer.normalizer.translatable" class="Symfony\Component\Serializer\Normalizer\TranslatableNormalizer">
-      <tag name="serializer.normalizer" priority="-890"/>
+      <tag name="serializer.normalizer" priority="-920"/>
       <argument type="service" id="translator.data_collector"/>
     </service>
     <service id="serializer.normalizer.form_error" class="Symfony\Component\Serializer\Normalizer\FormErrorNormalizer">
@@ -3716,6 +3801,8 @@
       <argument type="service" id="property_info" on-invalid="ignore"/>
       <argument type="service" id="serializer.mapping.class_discriminator_resolver" on-invalid="ignore"/>
       <argument>null</argument>
+      <argument type="collection"/>
+      <argument type="service" id="property_info" on-invalid="ignore"/>
     </service>
     <service id="serializer.denormalizer.array" class="Symfony\Component\Serializer\Normalizer\ArrayDenormalizer">
       <tag name="serializer.normalizer" priority="-990"/>
@@ -3724,7 +3811,7 @@
       <argument type="collection">
         <argument type="service">
           <service class="Symfony\Component\Serializer\Mapping\Loader\AttributeLoader">
-            <argument>null</argument>
+            <argument type="service" id="annotations.cached_reader" on-invalid="null"/>
           </service>
         </argument>
       </argument>
@@ -3737,7 +3824,7 @@
       <argument type="collection">
         <argument type="service">
           <service class="Symfony\Component\Serializer\Mapping\Loader\AttributeLoader">
-            <argument>null</argument>
+            <argument type="service" id="annotations.cached_reader" on-invalid="null"/>
           </service>
         </argument>
       </argument>
@@ -3790,7 +3877,7 @@
       </argument>
     </service>
     <service id="serializer.normalizer.backed_enum" class="Symfony\Component\Serializer\Normalizer\BackedEnumNormalizer">
-      <tag name="serializer.normalizer" priority="-880"/>
+      <tag name="serializer.normalizer" priority="-915"/>
     </service>
     <service id="property_info" class="Symfony\Component\PropertyInfo\PropertyInfoExtractor">
       <argument type="iterator">
@@ -4088,6 +4175,9 @@
       </call>
       <call method="enableAttributeMapping">
         <argument>true</argument>
+      </call>
+      <call method="setDoctrineAnnotationReader">
+        <argument type="service" id="annotations.cached_reader"/>
       </call>
       <call method="addMethodMapping">
         <argument>loadValidatorMetadata</argument>
@@ -5082,7 +5172,7 @@
       </call>
     </service>
     <service id="doctrine.dbal.default_connection.event_manager" class="Symfony\Bridge\Doctrine\ContainerAwareEventManager">
-      <argument type="service" id=".service_locator.XtmiKbi"/>
+      <argument type="service" id=".service_locator.wLDxIY3"/>
       <argument type="collection">
         <argument type="collection">
           <argument type="collection">
@@ -5137,6 +5227,24 @@
             <argument>postFlush</argument>
           </argument>
           <argument>turbo.doctrine.event_listener</argument>
+        </argument>
+        <argument type="collection">
+          <argument type="collection">
+            <argument>prePersist</argument>
+          </argument>
+          <argument>stof_doctrine_extensions.listener.sluggable</argument>
+        </argument>
+        <argument type="collection">
+          <argument type="collection">
+            <argument>onFlush</argument>
+          </argument>
+          <argument>stof_doctrine_extensions.listener.sluggable</argument>
+        </argument>
+        <argument type="collection">
+          <argument type="collection">
+            <argument>loadClassMetadata</argument>
+          </argument>
+          <argument>stof_doctrine_extensions.listener.sluggable</argument>
         </argument>
       </argument>
     </service>
@@ -6294,7 +6402,7 @@
       <tag name="doctrine.event_listener" event="onFlush"/>
       <tag name="doctrine.event_listener" event="postFlush"/>
       <argument type="service" id="turbo.broadcaster.action_renderer"/>
-      <argument>null</argument>
+      <argument type="service" id="annotations.cached_reader" on-invalid="null"/>
     </service>
     <service id="twig.missing_extension_suggestor" class="Twig\Extra\TwigExtraBundle\MissingExtensionSuggestor"/>
     <service id="security.authorization_checker" class="Symfony\Component\Security\Core\Authorization\AuthorizationChecker">
@@ -7314,6 +7422,7 @@
       <argument type="service" id="maker.file_manager"/>
       <argument type="service" id="maker.doctrine_helper"/>
       <argument type="service" id="maker.entity_class_generator"/>
+      <argument type="service" id="router.default" on-invalid="ignore"/>
     </service>
     <service id="maker.maker.make_schedule" class="Symfony\Bundle\MakerBundle\Maker\MakeSchedule">
       <tag name="maker.command"/>
@@ -7367,6 +7476,11 @@
       <argument type="service" id="maker.file_manager"/>
       <argument type="service" id="maker.security_config_updater"/>
       <argument type="service" id="maker.security_controller_builder"/>
+    </service>
+    <service id="maker.maker.make_custom_authenticator" class="Symfony\Bundle\MakerBundle\Maker\Security\MakeCustomAuthenticator">
+      <tag name="maker.command"/>
+      <argument type="service" id="maker.file_manager"/>
+      <argument type="service" id="maker.generator"/>
     </service>
     <service id="maker.maker.make_webhook" class="Symfony\Bundle\MakerBundle\Maker\MakeWebhook">
       <tag name="maker.command"/>
@@ -7696,6 +7810,52 @@
       <tag name="assets.package" package="easyadmin.assets.package"/>
       <argument type="service" id="request_stack"/>
     </service>
+    <service id="doctrine.fixtures_load_command" class="Doctrine\Bundle\FixturesBundle\Command\LoadDataFixturesDoctrineCommand">
+      <tag name="console.command" command="doctrine:fixtures:load"/>
+      <tag name="container.no_preload"/>
+      <argument type="service" id="doctrine.fixtures.loader"/>
+      <argument type="service" id="doctrine"/>
+      <argument type="collection">
+        <argument key="default" type="service" id="doctrine.fixtures.purger.orm_purger_factory"/>
+      </argument>
+      <call method="setName">
+        <argument>doctrine:fixtures:load</argument>
+      </call>
+    </service>
+    <service id="doctrine.fixtures.loader" class="Doctrine\Bundle\FixturesBundle\Loader\SymfonyFixturesLoader">
+      <argument type="service" id="service_container"/>
+      <call method="addFixtures">
+        <argument type="collection">
+          <argument type="collection">
+            <argument key="fixture" type="service" id="App\DataFixtures\AppFixtures"/>
+            <argument key="groups" type="collection"/>
+          </argument>
+          <argument type="collection">
+            <argument key="fixture" type="service" id="App\DataFixtures\ProductsFixtures"/>
+            <argument key="groups" type="collection"/>
+          </argument>
+          <argument type="collection">
+            <argument key="fixture" type="service" id="App\DataFixtures\UsersFixtures"/>
+            <argument key="groups" type="collection"/>
+          </argument>
+        </argument>
+      </call>
+    </service>
+    <service id="doctrine.fixtures.purger.orm_purger_factory" class="Doctrine\Bundle\FixturesBundle\Purger\ORMPurgerFactory">
+      <tag name="doctrine.fixtures.purger_factory" alias="default"/>
+    </service>
+    <service id="stof_doctrine_extensions.listener.sluggable" class="Gedmo\Sluggable\SluggableListener">
+      <tag name="doctrine.event_listener" connection="default" event="prePersist"/>
+      <tag name="doctrine.event_listener" connection="default" event="onFlush"/>
+      <tag name="doctrine.event_listener" connection="default" event="loadClassMetadata"/>
+      <call method="setCacheItemPool">
+        <argument type="service" id="stof_doctrine_extensions.metadata_cache"/>
+      </call>
+      <call method="setAnnotationReader">
+        <argument type="service" id="annotations.cached_reader" on-invalid="ignore"/>
+      </call>
+    </service>
+    <service id="stof_doctrine_extensions.metadata_cache" class="Symfony\Component\Cache\Adapter\ArrayAdapter"/>
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\AccountController" class="App\Controller\AccountController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\AccountController" class="App\Controller\AccountController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\AccountController" class="App\Controller\AccountController" autowire="true" autoconfigure="true" abstract="true"/>
@@ -7721,12 +7881,21 @@
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\HomeController" class="App\Controller\HomeController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\HomeController" class="App\Controller\HomeController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\HomeController" class="App\Controller\HomeController" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\ProductController" class="App\Controller\ProductController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\ProductController" class="App\Controller\ProductController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\ProductController" class="App\Controller\ProductController" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\RegisterController" class="App\Controller\RegisterController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\RegisterController" class="App\Controller\RegisterController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\RegisterController" class="App\Controller\RegisterController" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\SecurityController" class="App\Controller\SecurityController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\SecurityController" class="App\Controller\SecurityController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\SecurityController" class="App\Controller\SecurityController" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\FixturesBundle\ORMFixtureInterface.0.App\DataFixtures\AppFixtures" class="App\DataFixtures\AppFixtures" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\DataFixtures\AppFixtures" class="App\DataFixtures\AppFixtures" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\FixturesBundle\ORMFixtureInterface.0.App\DataFixtures\ProductsFixtures" class="App\DataFixtures\ProductsFixtures" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\DataFixtures\ProductsFixtures" class="App\DataFixtures\ProductsFixtures" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\FixturesBundle\ORMFixtureInterface.0.App\DataFixtures\UsersFixtures" class="App\DataFixtures\UsersFixtures" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\DataFixtures\UsersFixtures" class="App\DataFixtures\UsersFixtures" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\ChangePasswordType" class="App\Form\ChangePasswordType" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Form\ChangePasswordType" class="App\Form\ChangePasswordType" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\RegisterType" class="App\Form\RegisterType" autowire="true" abstract="true"/>
@@ -8198,6 +8367,20 @@
         <argument>Generate the code needed for the form_login authenticator</argument>
       </call>
     </service>
+    <service id="maker.auto_command.make_security_custom" class="Symfony\Bundle\MakerBundle\Command\MakerCommand">
+      <tag name="console.command" command="make:security:custom" description="Create a custom security authenticator."/>
+      <tag name="container.no_preload"/>
+      <argument type="service" id="maker.maker.make_custom_authenticator"/>
+      <argument type="service" id="maker.file_manager"/>
+      <argument type="service" id="maker.generator"/>
+      <argument type="service" id="maker.template_linter"/>
+      <call method="setName">
+        <argument>make:security:custom</argument>
+      </call>
+      <call method="setDescription">
+        <argument>Create a custom security authenticator.</argument>
+      </call>
+    </service>
     <service id="maker.auto_command.make_webhook" class="Symfony\Bundle\MakerBundle\Command\MakerCommand">
       <tag name="console.command" command="make:webhook" description="Create a new Webhook"/>
       <tag name="container.no_preload"/>
@@ -8297,13 +8480,25 @@
         <argument key="user" type="service_closure" id=".errored..service_locator.t7nLwyX.Symfony\Component\Security\Core\User\UserInterface"/>
       </argument>
     </service>
+    <service id=".service_locator.EOOeoln" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="repo" type="service_closure" id="App\Repository\ProductRepository"/>
+      </argument>
+    </service>
+    <service id=".service_locator.TxLdxz8" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="product" type="service_closure" id=".errored..service_locator.TxLdxz8.App\Entity\Product"/>
+      </argument>
+    </service>
     <service id=".service_locator.rSTd.nA" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="authenticationUtils" type="service_closure" id="security.authentication_utils"/>
       </argument>
     </service>
-    <service id=".service_locator.lBitEn." class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.S9MuWhz" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Controller\AccountPasswordController::index" type="service_closure" id=".service_locator.a_nr8Tn"/>
@@ -8371,6 +8566,8 @@
         <argument key="App\Controller\Admin\UserCrudController::persistEntity" type="service_closure" id=".service_locator.CsMkqUa"/>
         <argument key="App\Controller\Admin\UserCrudController::renderFilters" type="service_closure" id=".service_locator.t9B7cZ4"/>
         <argument key="App\Controller\Admin\UserCrudController::updateEntity" type="service_closure" id=".service_locator.CsMkqUa"/>
+        <argument key="App\Controller\ProductController::index" type="service_closure" id=".service_locator.EOOeoln"/>
+        <argument key="App\Controller\ProductController::show" type="service_closure" id=".service_locator.TxLdxz8"/>
         <argument key="App\Controller\SecurityController::login" type="service_closure" id=".service_locator.rSTd.nA"/>
         <argument key="App\Kernel::loadRoutes" type="service_closure" id=".service_locator.y4_Zrx."/>
         <argument key="App\Kernel::registerContainerConfiguration" type="service_closure" id=".service_locator.y4_Zrx."/>
@@ -8441,6 +8638,8 @@
         <argument key="App\Controller\Admin\UserCrudController:persistEntity" type="service_closure" id=".service_locator.CsMkqUa"/>
         <argument key="App\Controller\Admin\UserCrudController:renderFilters" type="service_closure" id=".service_locator.t9B7cZ4"/>
         <argument key="App\Controller\Admin\UserCrudController:updateEntity" type="service_closure" id=".service_locator.CsMkqUa"/>
+        <argument key="App\Controller\ProductController:index" type="service_closure" id=".service_locator.EOOeoln"/>
+        <argument key="App\Controller\ProductController:show" type="service_closure" id=".service_locator.TxLdxz8"/>
         <argument key="App\Controller\SecurityController:login" type="service_closure" id=".service_locator.rSTd.nA"/>
         <argument key="kernel:loadRoutes" type="service_closure" id=".service_locator.y4_Zrx."/>
         <argument key="kernel:registerContainerConfiguration" type="service_closure" id=".service_locator.y4_Zrx."/>
@@ -8471,10 +8670,6 @@
       <argument type="service" id="serializer.denormalizer.unwrapping"/>
       <argument type="service" id="serializer.data_collector"/>
     </service>
-    <service id=".debug.serializer.normalizer.serializer.normalizer.backed_enum" class="Symfony\Component\Serializer\Debug\TraceableNormalizer">
-      <argument type="service" id="serializer.normalizer.backed_enum"/>
-      <argument type="service" id="serializer.data_collector"/>
-    </service>
     <service id=".debug.serializer.normalizer.serializer.normalizer.flatten_exception" class="Symfony\Component\Serializer\Debug\TraceableNormalizer">
       <argument type="service" id="serializer.normalizer.flatten_exception"/>
       <argument type="service" id="serializer.data_collector"/>
@@ -8485,10 +8680,6 @@
     </service>
     <service id=".debug.serializer.normalizer.serializer.normalizer.uid" class="Symfony\Component\Serializer\Debug\TraceableNormalizer">
       <argument type="service" id="serializer.normalizer.uid"/>
-      <argument type="service" id="serializer.data_collector"/>
-    </service>
-    <service id=".debug.serializer.normalizer.serializer.normalizer.translatable" class="Symfony\Component\Serializer\Debug\TraceableNormalizer">
-      <argument type="service" id="serializer.normalizer.translatable"/>
       <argument type="service" id="serializer.data_collector"/>
     </service>
     <service id=".debug.serializer.normalizer.serializer.normalizer.datetime" class="Symfony\Component\Serializer\Debug\TraceableNormalizer">
@@ -8515,8 +8706,16 @@
       <argument type="service" id="serializer.normalizer.form_error"/>
       <argument type="service" id="serializer.data_collector"/>
     </service>
+    <service id=".debug.serializer.normalizer.serializer.normalizer.backed_enum" class="Symfony\Component\Serializer\Debug\TraceableNormalizer">
+      <argument type="service" id="serializer.normalizer.backed_enum"/>
+      <argument type="service" id="serializer.data_collector"/>
+    </service>
     <service id=".debug.serializer.normalizer.serializer.normalizer.data_uri" class="Symfony\Component\Serializer\Debug\TraceableNormalizer">
       <argument type="service" id="serializer.normalizer.data_uri"/>
+      <argument type="service" id="serializer.data_collector"/>
+    </service>
+    <service id=".debug.serializer.normalizer.serializer.normalizer.translatable" class="Symfony\Component\Serializer\Debug\TraceableNormalizer">
+      <argument type="service" id="serializer.normalizer.translatable"/>
       <argument type="service" id="serializer.data_collector"/>
     </service>
     <service id=".debug.serializer.normalizer.serializer.normalizer.json_serializable" class="Symfony\Component\Serializer\Debug\TraceableNormalizer">
@@ -8736,7 +8935,7 @@
       <argument type="service" id="http_client.uri_template"/>
       <argument type="service" id="debug.stopwatch" on-invalid="ignore"/>
     </service>
-    <service id=".service_locator.XtmiKbi" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.wLDxIY3" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="doctrine.orm.default_listeners.attach_entity_listeners" type="service_closure" id="doctrine.orm.default_listeners.attach_entity_listeners"/>
@@ -8745,6 +8944,7 @@
         <argument key="doctrine.orm.listeners.lock_store_schema_listener" type="service_closure" id="doctrine.orm.listeners.lock_store_schema_listener"/>
         <argument key="doctrine.orm.listeners.pdo_session_handler_schema_listener" type="service_closure" id="doctrine.orm.listeners.pdo_session_handler_schema_listener"/>
         <argument key="doctrine.orm.messenger.doctrine_schema_listener" type="service_closure" id="doctrine.orm.messenger.doctrine_schema_listener"/>
+        <argument key="stof_doctrine_extensions.listener.sluggable" type="service_closure" id="stof_doctrine_extensions.listener.sluggable"/>
         <argument key="turbo.doctrine.event_listener" type="service_closure" id="turbo.doctrine.event_listener"/>
       </argument>
     </service>
@@ -8960,10 +9160,10 @@
     <service id="EasyCorp\Bundle\EasyAdminBundle\Registry\DashboardControllerRegistry" class="EasyCorp\Bundle\EasyAdminBundle\Registry\DashboardControllerRegistry">
       <argument>/Applications/MAMP/htdocs/myboutique/var/cache/dev</argument>
       <argument type="collection">
-        <argument key="App\Controller\Admin\DashboardController">2faf3d6</argument>
+        <argument key="App\Controller\Admin\DashboardController">edac103</argument>
       </argument>
       <argument type="collection">
-        <argument key="2faf3d6">App\Controller\Admin\DashboardController</argument>
+        <argument key="edac103">App\Controller\Admin\DashboardController</argument>
       </argument>
     </service>
     <service id="EasyCorp\Bundle\EasyAdminBundle\Registry\CrudControllerRegistry" class="EasyCorp\Bundle\EasyAdminBundle\Registry\CrudControllerRegistry">
@@ -8973,9 +9173,9 @@
         <argument key="App\Controller\Admin\UserCrudController">App\Entity\User</argument>
       </argument>
       <argument type="collection">
-        <argument key="App\Controller\Admin\CategoryCrudController">e02115a</argument>
-        <argument key="App\Controller\Admin\ProductCrudController">f3adfcc</argument>
-        <argument key="App\Controller\Admin\UserCrudController">213e4fc</argument>
+        <argument key="App\Controller\Admin\CategoryCrudController">c986433</argument>
+        <argument key="App\Controller\Admin\ProductCrudController">a0a434e</argument>
+        <argument key="App\Controller\Admin\UserCrudController">452f1f8</argument>
       </argument>
       <argument type="collection">
         <argument key="App\Entity\Category">App\Controller\Admin\CategoryCrudController</argument>
@@ -8983,9 +9183,9 @@
         <argument key="App\Entity\User">App\Controller\Admin\UserCrudController</argument>
       </argument>
       <argument type="collection">
-        <argument key="e02115a">App\Controller\Admin\CategoryCrudController</argument>
-        <argument key="f3adfcc">App\Controller\Admin\ProductCrudController</argument>
-        <argument key="213e4fc">App\Controller\Admin\UserCrudController</argument>
+        <argument key="c986433">App\Controller\Admin\CategoryCrudController</argument>
+        <argument key="a0a434e">App\Controller\Admin\ProductCrudController</argument>
+        <argument key="452f1f8">App\Controller\Admin\UserCrudController</argument>
       </argument>
     </service>
     <service id=".service_locator.O24_MAy" class="Symfony\Component\DependencyInjection\ServiceLocator">
@@ -9244,6 +9444,12 @@
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.jUv.zyj" method="withContext"/>
     </service>
+    <service id=".service_locator.jUv.zyj.App\Controller\ProductController" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\ProductController"/>
+      <argument>App\Controller\ProductController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.jUv.zyj" method="withContext"/>
+    </service>
     <service id=".service_locator.jUv.zyj.App\Controller\RegisterController" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator_context" id="App\Controller\RegisterController"/>
       <argument>App\Controller\RegisterController</argument>
@@ -9445,6 +9651,7 @@
           <argument>App\Controller\Admin\ProductCrudController</argument>
           <argument>App\Controller\Admin\UserCrudController</argument>
           <argument>App\Controller\HomeController</argument>
+          <argument>App\Controller\ProductController</argument>
           <argument>App\Controller\RegisterController</argument>
           <argument>App\Controller\SecurityController</argument>
           <argument>Doctrine\Bundle\DoctrineBundle\Controller\ProfilerController</argument>
@@ -9482,12 +9689,6 @@
         </argument>
         <argument type="service">
           <service class="Symfony\Component\Serializer\Debug\TraceableNormalizer">
-            <argument type="service" id="serializer.normalizer.backed_enum"/>
-            <argument type="service" id="serializer.data_collector"/>
-          </service>
-        </argument>
-        <argument type="service">
-          <service class="Symfony\Component\Serializer\Debug\TraceableNormalizer">
             <argument type="service" id="serializer.normalizer.flatten_exception"/>
             <argument type="service" id="serializer.data_collector"/>
           </service>
@@ -9501,12 +9702,6 @@
         <argument type="service">
           <service class="Symfony\Component\Serializer\Debug\TraceableNormalizer">
             <argument type="service" id="serializer.normalizer.uid"/>
-            <argument type="service" id="serializer.data_collector"/>
-          </service>
-        </argument>
-        <argument type="service">
-          <service class="Symfony\Component\Serializer\Debug\TraceableNormalizer">
-            <argument type="service" id="serializer.normalizer.translatable"/>
             <argument type="service" id="serializer.data_collector"/>
           </service>
         </argument>
@@ -9548,7 +9743,19 @@
         </argument>
         <argument type="service">
           <service class="Symfony\Component\Serializer\Debug\TraceableNormalizer">
+            <argument type="service" id="serializer.normalizer.backed_enum"/>
+            <argument type="service" id="serializer.data_collector"/>
+          </service>
+        </argument>
+        <argument type="service">
+          <service class="Symfony\Component\Serializer\Debug\TraceableNormalizer">
             <argument type="service" id="serializer.normalizer.data_uri"/>
+            <argument type="service" id="serializer.data_collector"/>
+          </service>
+        </argument>
+        <argument type="service">
+          <service class="Symfony\Component\Serializer\Debug\TraceableNormalizer">
+            <argument type="service" id="serializer.normalizer.translatable"/>
             <argument type="service" id="serializer.data_collector"/>
           </service>
         </argument>
@@ -9695,6 +9902,9 @@
     </service>
     <service id=".errored..service_locator.t7nLwyX.Symfony\Component\Security\Core\User\UserInterface" class="Symfony\Component\Security\Core\User\UserInterface">
       <tag name="container.error" message="Cannot autowire service &quot;.service_locator.t7nLwyX&quot;: it references interface &quot;Symfony\Component\Security\Core\User\UserInterface&quot; but no such service exists. Did you create a class that implements this interface?"/>
+    </service>
+    <service id=".errored..service_locator.TxLdxz8.App\Entity\Product" class="App\Entity\Product">
+      <tag name="container.error" message="Cannot autowire service &quot;.service_locator.TxLdxz8&quot;: it needs an instance of &quot;App\Entity\Product&quot; but this type has been excluded in &quot;config/services.yaml&quot;."/>
     </service>
     <service id=".console.command.about.lazy" class="Symfony\Component\Console\Command\LazyCommand">
       <argument>about</argument>
@@ -10373,6 +10583,13 @@
       <argument>false</argument>
       <argument type="service_closure" id="maker.auto_command.make_security_form_login"/>
     </service>
+    <service id=".maker.auto_command.make_security_custom.lazy" class="Symfony\Component\Console\Command\LazyCommand">
+      <argument>make:security:custom</argument>
+      <argument type="collection"/>
+      <argument>Create a custom security authenticator.</argument>
+      <argument>false</argument>
+      <argument type="service_closure" id="maker.auto_command.make_security_custom"/>
+    </service>
     <service id=".maker.auto_command.make_webhook.lazy" class="Symfony\Component\Console\Command\LazyCommand">
       <argument>make:webhook</argument>
       <argument type="collection"/>
@@ -10382,7 +10599,7 @@
     </service>
     <service id="console.command_loader" class="Symfony\Component\Console\CommandLoader\ContainerCommandLoader" public="true">
       <tag name="container.no_preload"/>
-      <argument type="service" id=".service_locator.AY8fLxo"/>
+      <argument type="service" id=".service_locator.tA3b8eI"/>
       <argument type="collection">
         <argument key="about">console.command.about</argument>
         <argument key="assets:install">console.command.assets_install</argument>
@@ -10471,6 +10688,7 @@
         <argument key="security:hash-password">security.command.user_password_hash</argument>
         <argument key="make:admin:dashboard">EasyCorp\Bundle\EasyAdminBundle\Command\MakeAdminDashboardCommand</argument>
         <argument key="make:admin:crud">EasyCorp\Bundle\EasyAdminBundle\Command\MakeCrudControllerCommand</argument>
+        <argument key="doctrine:fixtures:load">doctrine.fixtures_load_command</argument>
         <argument key="make:auth">maker.auto_command.make_auth</argument>
         <argument key="make:command">maker.auto_command.make_command</argument>
         <argument key="make:twig-component">maker.auto_command.make_twig_component</argument>
@@ -10499,10 +10717,11 @@
         <argument key="make:migration">maker.auto_command.make_migration</argument>
         <argument key="make:stimulus-controller">maker.auto_command.make_stimulus_controller</argument>
         <argument key="make:security:form-login">maker.auto_command.make_security_form_login</argument>
+        <argument key="make:security:custom">maker.auto_command.make_security_custom</argument>
         <argument key="make:webhook">maker.auto_command.make_webhook</argument>
       </argument>
     </service>
-    <service id=".service_locator.AY8fLxo" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.tA3b8eI" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="Doctrine\DBAL\Tools\Console\Command\RunSqlCommand" type="service_closure" id="Doctrine\DBAL\Tools\Console\Command\RunSqlCommand"/>
@@ -10566,6 +10785,7 @@
         <argument key="doctrine.clear_query_region_command" type="service_closure" id="doctrine.clear_query_region_command"/>
         <argument key="doctrine.database_create_command" type="service_closure" id="doctrine.database_create_command"/>
         <argument key="doctrine.database_drop_command" type="service_closure" id="doctrine.database_drop_command"/>
+        <argument key="doctrine.fixtures_load_command" type="service_closure" id="doctrine.fixtures_load_command"/>
         <argument key="doctrine.mapping_info_command" type="service_closure" id="doctrine.mapping_info_command"/>
         <argument key="doctrine.query_dql_command" type="service_closure" id="doctrine.query_dql_command"/>
         <argument key="doctrine.query_sql_command" type="service_closure" id="doctrine.query_sql_command"/>
@@ -10601,6 +10821,7 @@
         <argument key="maker.auto_command.make_registration_form" type="service_closure" id=".maker.auto_command.make_registration_form.lazy"/>
         <argument key="maker.auto_command.make_reset_password" type="service_closure" id=".maker.auto_command.make_reset_password.lazy"/>
         <argument key="maker.auto_command.make_schedule" type="service_closure" id=".maker.auto_command.make_schedule.lazy"/>
+        <argument key="maker.auto_command.make_security_custom" type="service_closure" id=".maker.auto_command.make_security_custom.lazy"/>
         <argument key="maker.auto_command.make_security_form_login" type="service_closure" id=".maker.auto_command.make_security_form_login.lazy"/>
         <argument key="maker.auto_command.make_serializer_encoder" type="service_closure" id=".maker.auto_command.make_serializer_encoder.lazy"/>
         <argument key="maker.auto_command.make_serializer_normalizer" type="service_closure" id=".maker.auto_command.make_serializer_normalizer.lazy"/>
@@ -10793,6 +11014,8 @@
     <service id="Symfony\Component\Routing\Matcher\UrlMatcherInterface" alias="router.default"/>
     <service id="Symfony\Component\Routing\RequestContextAwareInterface" alias="router.default"/>
     <service id="Symfony\Component\Routing\RequestContext" alias="router.request_context"/>
+    <service id="annotation_reader" alias="annotations.cached_reader"/>
+    <service id="Doctrine\Common\Annotations\Reader" alias="annotations.cached_reader"/>
     <service id="Symfony\Component\PropertyAccess\PropertyAccessorInterface" alias="property_accessor"/>
     <service id="Symfony\Component\Serializer\SerializerInterface" alias="debug.serializer"/>
     <service id="Symfony\Component\Serializer\Normalizer\NormalizerInterface" alias="debug.serializer"/>
@@ -10860,6 +11083,7 @@
     <service id="doctrine.dbal.event_manager" alias="doctrine.dbal.default_connection.event_manager"/>
     <service id="Doctrine\DBAL\Connection $defaultConnection" alias="doctrine.dbal.default_connection"/>
     <service id="Doctrine\ORM\EntityManagerInterface" alias="doctrine.orm.default_entity_manager"/>
+    <service id="doctrine.orm.metadata.annotation_reader" alias="annotations.cached_reader"/>
     <service id="doctrine.orm.entity_manager" alias="doctrine.orm.default_entity_manager" public="true"/>
     <service id="doctrine.orm.default_metadata_cache" alias="cache.doctrine.orm.default.metadata"/>
     <service id="doctrine.orm.default_result_cache" alias="cache.doctrine.orm.default.result"/>
@@ -10904,7 +11128,7 @@
     <service id="EasyCorp\Bundle\EasyAdminBundle\Contracts\Orm\EntityPaginatorInterface" alias="EasyCorp\Bundle\EasyAdminBundle\Orm\EntityPaginator"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.bJ.4HC5" public="true"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.lBitEn."/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.S9MuWhz"/>
     <service id="doctrine.id_generator_locator" alias=".service_locator.KLVvNIq"/>
     <service id="twig.loader" alias="twig.loader.native_filesystem"/>
     <service id="Psr\Log\LoggerInterface $requestLogger" alias="monolog.logger.request"/>
@@ -10960,6 +11184,8 @@
     <service id=".service_locator.i.G3y1p" alias=".service_locator.Lazlz4J"/>
     <service id=".service_locator.z_typH5" alias=".service_locator.vMUOjiq"/>
     <service id=".service_locator.uoBNKjJ" alias=".service_locator.t7nLwyX"/>
+    <service id=".service_locator.4dFaPeW" alias=".service_locator.EOOeoln"/>
+    <service id=".service_locator.72pxXVD" alias=".service_locator.TxLdxz8"/>
     <service id=".service_locator.7NIAq8D" alias=".service_locator.rSTd.nA"/>
     <service id=".service_locator.Q1z.f9O" alias=".service_locator.jUv.zyj"/>
     <service id=".service_locator.Tvu22ko" alias=".service_locator.ZP92gqz"/>

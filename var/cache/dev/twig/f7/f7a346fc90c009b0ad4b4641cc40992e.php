@@ -65,7 +65,7 @@ class __TwigTemplate_26ad5bb4783180bb276368fbcb0283f6 extends Template
         $__internal_6f47bbe9983af81f1e7450e9a3e3768f->enter($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "content"));
 
         // line 4
-        echo "\t<h1 class=\"mt-3\">Inscription</h1>
+        echo "\t<h1 class=\"mt-3\">Inscription ddddd</h1>
 \tMon formulaire d'inscription
 
 \t";
@@ -136,7 +136,7 @@ class __TwigTemplate_26ad5bb4783180bb276368fbcb0283f6 extends Template
         return new Source("{% extends 'base.html.twig' %}
 
 {% block content %}
-\t<h1 class=\"mt-3\">Inscription</h1>
+\t<h1 class=\"mt-3\">Inscription ddddd</h1>
 \tMon formulaire d'inscription
 
 \t{{ form_start(form) }}

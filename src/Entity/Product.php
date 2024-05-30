@@ -7,12 +7,27 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Cocur\Slugify\Slugify;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 #[UniqueEntity(fields: "name", message: "Ce nom est déja utilisé")]
 #[ORM\HasLifecycleCallbacks()]
 class Product
 {
+
+    /**
+    * permet d'initialiser le slug ( on indique à doctrine que cette fonction doit être appelée lors de la mise à jour ou de la création)
+    * @ORM\PrePersist
+    * @ORM\PreUpdate
+    */
+    public function initializeSlug()
+    {
+        // au moment de la création ou de la mise à jour
+        $slugify = new Slugify();
+        $this->slug = $slugify->slugify($this->name);
+    }
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -21,7 +36,7 @@ class Product
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $slug = null;
 
     #[ORM\Column(length: 255)]
@@ -59,16 +74,17 @@ class Product
         return $this;
     }
 
+    public function setSlug(?string $slug): static
+{
+    $this->slug = $slug;
+
+    return $this;
+}
+
+     #[Gedmo\Slug(fields: 'title')]
     public function getSlug(): ?string
     {
         return $this->slug;
-    }
-
-    public function setSlug(string $slug): static
-    {
-        $this->slug = $slug;
-
-        return $this;
     }
 
     public function getIllustration(): ?string
